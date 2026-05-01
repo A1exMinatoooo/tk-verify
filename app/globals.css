@@ -138,7 +138,7 @@
   padding: 1.25rem 1.5rem !important;
   min-width: 180px !important;
   max-width: 320px !important;
-  gap: 0.5rem !important;
+  gap: 0.75rem !important;
 }
 
 .cn-toast [data-icon] {
@@ -148,6 +148,7 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  pointer-events: none !important;
 }
 
 .cn-toast [data-icon] svg {
@@ -161,6 +162,7 @@
   align-items: center !important;
   width: 100% !important;
   overflow: hidden !important;
+  pointer-events: none !important;
 }
 
 .cn-toast [data-title] {
@@ -174,35 +176,4 @@
   font-size: 0.8125rem !important;
   line-height: 1.4 !important;
   word-break: break-word !important;
-}
-
-/* Toast Animation */
-@keyframes toast-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes toast-out {
-  0% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.8) translateY(-20px);
-  }
-}
-
-[data-sonner-toast] {
-  animation: toast-in 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) forwards !important;
-}
-
-[data-sonner-toast][data-removing="true"] {
-  animation: toast-out 0.2s ease-in forwards !important;
 }
