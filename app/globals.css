@@ -131,23 +131,12 @@
 
 /* Custom Toast Styles */
 [data-sonner-toaster] {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  display: flex !important;
-  justify-content: center !important;
-  pointer-events: none !important;
-  z-index: 999999 !important;
-  padding: 1rem !important;
-  transform: none !important;
-  margin: 0 !important;
+  --offset: 1rem;
 }
 
 @media (max-width: 640px) {
   [data-sonner-toaster] {
-    padding: 0.5rem !important;
+    --offset: 0.5rem;
   }
 }
 
@@ -160,7 +149,6 @@
   min-width: 180px !important;
   max-width: 320px !important;
   gap: 0.75rem !important;
-  pointer-events: auto !important;
 }
 
 .cn-toast [data-icon] {
