@@ -71,13 +71,13 @@ export function PhoneSearch() {
               onChange={(e) => setLast4(e.target.value)}
               maxLength={4}
               inputMode="numeric"
-              className="text-center text-lg tracking-widest h-12"
+              className="text-center text-xl tracking-[0.5em] h-14 font-semibold"
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             />
             <Button 
               onClick={handleSearch} 
               disabled={loading}
-              className="h-12 px-6"
+              className="h-14 px-8 text-lg font-medium"
             >
               {loading ? "查询中..." : "查询"}
             </Button>
@@ -111,7 +111,7 @@ export function PhoneSearch() {
                     {phone.status === "active" && (
                       <Button
                         variant="destructive"
-                        className="h-10 w-full sm:w-auto"
+                        className="h-11 w-full sm:w-auto text-base font-medium"
                         onClick={() => handleVerify(phone)}
                       >
                         核销

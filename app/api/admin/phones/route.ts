@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { verifyAdminPassword } from "@/lib/auth"
-import { addPhones, getAllPhones, deletePhone } from "@/lib/db"
+import { addPhones, getAllPhones, deletePhone, deleteAllPhones, resetVerificationStatus } from "@/lib/db"
 import type { ApiResponse, PhoneRecord } from "@/lib/types"
 
 async function verifyAuth(request: NextRequest): Promise<boolean> {
@@ -89,7 +89,25 @@ export async function DELETE(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { phone } = body
+    const { phone, action } = body
+
+    if (action === "deleteAll") {
+      const result = await deleteAllPhones()
+      return NextResponse.json<ApiResponse>({
+        success: true,
+        data: result,
+        message: `已删除 ${result.count} 个手机号`,
+      })
+    }
+
+    if (action === "resetVerification") {
+      const result = await resetVerificationStatus()
+      return NextResponse.json<ApiResponse>({
+        success: true,
+        data: result,
+        message: `已重置 ${result.count} 个手机号的核销状态`,
+      })
+    }
 
     if (!phone || typeof phone !== "string") {
       return NextResponse.json<ApiResponse>(

@@ -116,6 +116,60 @@ export async function deletePhone(phone: string): Promise<{ success: boolean; me
   return { success: true, message: "删除成功" }
 }
 
+export async function deleteAllPhones(): Promise<{ success: boolean; count: number }> {
+  const phones = await redis.smembers(KEYS.ALL_PHONES)
+  
+  if (phones.length === 0) {
+    return { success: true, count: 0 }
+  }
+
+  const pipeline = redis.pipeline()
+  
+  for (const phone of phones) {
+    const phoneStr = String(phone)
+    pipeline.del(KEYS.phone(phoneStr))
+  }
+  
+  pipeline.del(KEYS.ALL_PHONES)
+  pipeline.del(KEYS.ACTIVE_PHONES)
+  pipeline.del(KEYS.VERIFIED_PHONES)
+  
+  await pipeline.exec()
+
+  return { success: true, count: phones.length }
+}
+
+export async function resetVerificationStatus(): Promise<{ success: boolean; count: number }> {
+  const phones = await redis.smembers(KEYS.VERIFIED_PHONES)
+  
+  if (phones.length === 0) {
+    return { success: true, count: 0 }
+  }
+
+  const pipeline = redis.pipeline()
+  const now = Date.now()
+  
+  for (const phone of phones) {
+    const phoneStr = String(phone)
+    const record = await redis.get<PhoneRecord>(KEYS.phone(phoneStr))
+    if (record) {
+      const updatedRecord: PhoneRecord = {
+        ...record,
+        status: "active",
+        verifiedAt: null,
+      }
+      pipeline.set(KEYS.phone(phoneStr), JSON.stringify(updatedRecord))
+    }
+  }
+  
+  pipeline.sadd(KEYS.ACTIVE_PHONES, ...phones.map(p => String(p)))
+  pipeline.del(KEYS.VERIFIED_PHONES)
+  
+  await pipeline.exec()
+
+  return { success: true, count: phones.length }
+}
+
 export async function getAllPhones(search?: string, status?: "active" | "verified"): Promise<PhoneRecord[]> {
   let phones: unknown[]
 

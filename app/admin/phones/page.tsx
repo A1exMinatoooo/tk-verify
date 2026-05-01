@@ -1,9 +1,21 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import { toast } from "sonner"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import {
   Table,
   TableBody,
@@ -40,7 +52,7 @@ export default function PhonesPage() {
         setPhones(data.data || [])
       }
     } catch {
-      alert("获取数据失败")
+      toast.error("获取数据失败")
     } finally {
       setLoading(false)
     }
@@ -51,10 +63,6 @@ export default function PhonesPage() {
   }, [fetchPhones])
 
   const handleDelete = async (phone: string) => {
-    if (!confirm(`确定要删除 ${phone} 吗？`)) {
-      return
-    }
-
     try {
       const token = sessionStorage.getItem("admin_token")
       const response = await fetch("/api/admin/phones", {
@@ -68,12 +76,61 @@ export default function PhonesPage() {
 
       const data = await response.json()
       if (data.success) {
+        toast.success("删除成功")
         fetchPhones()
       } else {
-        alert(data.error || "删除失败")
+        toast.error(data.error || "删除失败")
       }
     } catch {
-      alert("删除失败")
+      toast.error("删除失败")
+    }
+  }
+
+  const handleDeleteAll = async () => {
+    try {
+      const token = sessionStorage.getItem("admin_token")
+      const response = await fetch("/api/admin/phones", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ action: "deleteAll" }),
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        toast.success(data.message)
+        fetchPhones()
+      } else {
+        toast.error(data.error || "删除失败")
+      }
+    } catch {
+      toast.error("删除失败")
+    }
+  }
+
+  const handleResetVerification = async () => {
+    try {
+      const token = sessionStorage.getItem("admin_token")
+      const response = await fetch("/api/admin/phones", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ action: "resetVerification" }),
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        toast.success(data.message)
+        fetchPhones()
+      } else {
+        toast.error(data.error || "重置失败")
+      }
+    } catch {
+      toast.error("重置失败")
     }
   }
 
@@ -97,10 +154,10 @@ export default function PhonesPage() {
         window.URL.revokeObjectURL(url)
         document.body.removeChild(a)
       } else {
-        alert("导出失败")
+        toast.error("导出失败")
       }
     } catch {
-      alert("导出失败")
+      toast.error("导出失败")
     }
   }
 
@@ -112,9 +169,51 @@ export default function PhonesPage() {
     <div>
       <Card>
         <CardHeader>
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <CardTitle>手机号管理</CardTitle>
-            <Button onClick={handleExport}>导出CSV</Button>
+            <div className="flex flex-wrap gap-2">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" size="sm">清空核销状态</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>确认清空核销状态</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      此操作将把所有已核销的手机号重置为待核销状态，此操作不可撤销。
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>取消</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleResetVerification}>
+                      确认清空
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm">删除所有手机号</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>确认删除所有手机号</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      此操作将永久删除所有手机号数据，此操作不可撤销。
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>取消</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDeleteAll}>
+                      确认删除
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
+              <Button onClick={handleExport} variant="outline" size="sm">导出CSV</Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>
