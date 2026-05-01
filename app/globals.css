@@ -130,6 +130,18 @@
 }
 
 /* Custom Toast Styles */
+[data-sonner-toaster] {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+@media (max-width: 640px) {
+  [data-sonner-toaster] {
+    width: auto !important;
+    max-width: calc(100vw - 2rem) !important;
+  }
+}
+
 .cn-toast {
   flex-direction: column !important;
   align-items: center !important;
