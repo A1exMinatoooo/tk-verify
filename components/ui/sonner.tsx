@@ -11,25 +11,12 @@ const Toaster = ({ ...props }: ToasterProps) => {
     <Sonner
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
-      position="top-center"
-      expand={false}
-      richColors={false}
       icons={{
-        success: (
-          <CircleCheckIcon className="text-green-500" />
-        ),
-        info: (
-          <InfoIcon className="text-blue-500" />
-        ),
-        warning: (
-          <TriangleAlertIcon className="text-yellow-500" />
-        ),
-        error: (
-          <OctagonXIcon className="text-red-500" />
-        ),
-        loading: (
-          <Loader2Icon className="animate-spin" />
-        ),
+        success: <CircleCheckIcon className="text-green-500" />,
+        info: <InfoIcon className="text-blue-500" />,
+        warning: <TriangleAlertIcon className="text-yellow-500" />,
+        error: <OctagonXIcon className="text-red-500" />,
+        loading: <Loader2Icon className="animate-spin" />,
       }}
       style={
         {
@@ -39,11 +26,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--border-radius": "var(--radius)",
         } as React.CSSProperties
       }
-      toastOptions={{
-        classNames: {
-          toast: "cn-toast",
-        },
-      }}
       {...props}
     />
   )
