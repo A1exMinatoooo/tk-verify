@@ -31,6 +31,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/A1exMinatoooo/tk-verify)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 环境变量
+
+部署时需要配置以下环境变量：
+
+| 变量名 | 说明 | 默认值 |
+|--------|------|--------|
+| `UPSTASH_REDIS_REST_URL` | Upstash Redis REST URL | - |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis REST Token | - |
+| `ADMIN_PASSWORD` | 管理员密码 | `admin123` |
