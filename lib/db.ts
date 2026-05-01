@@ -62,6 +62,7 @@ export async function getPhonesByLast4(last4: string): Promise<VerifyResult[]> {
       if (record) {
         results.push({
           phone: record.phone,
+          displayPhone: record.phone,
           last4: record.last4,
           status: record.status,
           createdAt: new Date(record.createdAt).toISOString(),
@@ -162,7 +163,7 @@ export async function resetVerificationStatus(): Promise<{ success: boolean; cou
     }
   }
   
-  pipeline.sadd(KEYS.ACTIVE_PHONES, ...phones.map(p => String(p)))
+  pipeline.sadd(KEYS.ACTIVE_PHONES, phones.map(p => String(p)))
   pipeline.del(KEYS.VERIFIED_PHONES)
   
   await pipeline.exec()

@@ -173,9 +173,7 @@ export default function PhonesPage() {
             <CardTitle>手机号管理</CardTitle>
             <div className="flex flex-wrap gap-2">
               <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="outline" size="sm">清空核销状态</Button>
-                </AlertDialogTrigger>
+                <AlertDialogTrigger render={<Button variant="outline" size="sm" />}>清空核销状态</AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle>确认清空核销状态</AlertDialogTitle>
@@ -193,9 +191,7 @@ export default function PhonesPage() {
               </AlertDialog>
 
               <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="sm">删除所有手机号</Button>
-                </AlertDialogTrigger>
+                <AlertDialogTrigger render={<Button variant="destructive" size="sm" />}>删除所有手机号</AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle>确认删除所有手机号</AlertDialogTitle>
@@ -286,11 +282,7 @@ export default function PhonesPage() {
                       </TableCell>
                       <TableCell className="text-right">
                         <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button variant="destructive" size="sm">
-                              删除
-                            </Button>
-                          </AlertDialogTrigger>
+                          <AlertDialogTrigger render={<Button variant="destructive" size="sm" />}>删除</AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
                               <AlertDialogTitle>确认删除</AlertDialogTitle>
