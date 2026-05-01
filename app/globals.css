@@ -130,13 +130,13 @@
 }
 
 /* Custom Toast Styles */
-[data-sonner-toaster] {
-  --offset: 1rem;
-}
-
 @media (max-width: 640px) {
   [data-sonner-toaster] {
-    --offset: 0.5rem;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    right: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 }
 
