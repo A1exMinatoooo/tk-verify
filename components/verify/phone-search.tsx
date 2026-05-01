@@ -55,6 +55,7 @@ export function PhoneSearch() {
     }
     setDialogOpen(false)
     setSelectedPhone(null)
+    setLast4("")
   }
 
   return (
