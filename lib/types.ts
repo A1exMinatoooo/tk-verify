@@ -20,6 +20,10 @@ export interface StatsData {
   verified: number
 }
 
+export interface AppSettings {
+  title: string
+}
+
 export interface ApiResponse<T = unknown> {
   success: boolean
   data?: T

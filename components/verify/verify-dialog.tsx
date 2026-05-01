@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 import {
   Dialog,
   DialogContent,
@@ -42,13 +43,13 @@ export function VerifyDialog({
       const data = await response.json()
 
       if (data.success) {
-        alert("核销成功")
+        toast.success("核销成功")
         onSuccess()
       } else {
-        alert(data.message || "核销失败")
+        toast.error(data.message || "核销失败")
       }
     } catch {
-      alert("核销失败")
+      toast.error("核销失败")
     } finally {
       setLoading(false)
     }

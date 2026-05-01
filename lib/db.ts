@@ -1,5 +1,5 @@
 import { redis, KEYS } from "./redis"
-import type { PhoneRecord, VerifyResult, StatsData } from "./types"
+import type { PhoneRecord, VerifyResult, StatsData, AppSettings } from "./types"
 
 export async function addPhone(phone: string): Promise<{ success: boolean; message: string }> {
   const existing = await redis.get<PhoneRecord>(KEYS.phone(phone))
@@ -161,4 +161,20 @@ export async function formatPhone(phone: string): Promise<string> {
     return `${phone.slice(0, 3)}****${phone.slice(-4)}`
   }
   return phone
+}
+
+const DEFAULT_SETTINGS: AppSettings = {
+  title: "手机号核销系统",
+}
+
+export async function getSettings(): Promise<AppSettings> {
+  const settings = await redis.get<AppSettings>(KEYS.SETTINGS)
+  return settings || DEFAULT_SETTINGS
+}
+
+export async function updateSettings(settings: Partial<AppSettings>): Promise<AppSettings> {
+  const current = await getSettings()
+  const updated = { ...current, ...settings }
+  await redis.set(KEYS.SETTINGS, JSON.stringify(updated))
+  return updated
 }

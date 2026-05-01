@@ -134,6 +134,13 @@ export default function AdminLayout({
               统计信息
             </Button>
           </Link>
+          <Link href="/admin/settings">
+            <Button
+              variant={pathname === "/admin/settings" ? "default" : "outline"}
+            >
+              系统设置
+            </Button>
+          </Link>
         </nav>
         {children}
       </div>

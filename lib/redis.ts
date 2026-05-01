@@ -9,6 +9,7 @@ const KEYS = {
   ALL_PHONES: "phones:all",
   ACTIVE_PHONES: "phones:active",
   VERIFIED_PHONES: "phones:verified",
+  SETTINGS: "app:settings",
   phone: (phone: string) => `phone:${phone}`,
 } as const
 

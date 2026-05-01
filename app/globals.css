@@ -128,3 +128,65 @@
     @apply font-sans;
   }
 }
+
+/* Custom Toast Styles */
+.cn-toast {
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 1.5rem !important;
+  min-width: 200px !important;
+  gap: 0.75rem !important;
+}
+
+.cn-toast [data-icon] {
+  margin: 0 !important;
+  order: -1 !important;
+}
+
+.cn-toast [data-content] {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.cn-toast [data-title] {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+}
+
+.cn-toast [data-description] {
+  font-size: 0.875rem !important;
+}
+
+/* Toast Animation */
+@keyframes toast-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes toast-out {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+}
+
+[data-sonner-toast] {
+  animation: toast-in 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) forwards !important;
+}
+
+[data-sonner-toast][data-removing="true"] {
+  animation: toast-out 0.2s ease-in forwards !important;
+}
