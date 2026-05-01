@@ -22,6 +22,7 @@ export interface StatsData {
 
 export interface AppSettings {
   title: string
+  enableMask: boolean
 }
 
 export interface ApiResponse<T = unknown> {

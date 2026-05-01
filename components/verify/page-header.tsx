@@ -25,10 +25,12 @@ export function PageHeader() {
 
   return (
     <header className="border-b">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">{title}</h1>
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        <h1 className="text-xl md:text-2xl font-bold truncate mr-3">{title}</h1>
         <Link href="/admin">
-          <Button variant="outline">管理后台</Button>
+          <Button variant="outline" size="sm" className="shrink-0">
+            管理后台
+          </Button>
         </Link>
       </div>
     </header>

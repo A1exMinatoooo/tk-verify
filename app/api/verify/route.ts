@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getPhonesByLast4, verifyPhone, formatPhone } from "@/lib/db"
+import { getPhonesByLast4, verifyPhone, formatPhone, getSettings } from "@/lib/db"
 import type { ApiResponse, VerifyResult } from "@/lib/types"
 
 export async function GET(request: NextRequest) {
@@ -15,10 +15,12 @@ export async function GET(request: NextRequest) {
     }
 
     const phones = await getPhonesByLast4(last4)
+    const settings = await getSettings()
+    
     const results: VerifyResult[] = await Promise.all(
       phones.map(async (p) => ({
         phone: p.phone,
-        displayPhone: await formatPhone(p.phone),
+        displayPhone: settings.enableMask ? await formatPhone(p.phone) : p.phone,
         last4: p.last4,
         status: p.status,
         createdAt: p.createdAt,

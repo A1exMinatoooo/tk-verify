@@ -57,7 +57,7 @@ export function VerifyDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>确认核销</DialogTitle>
           <DialogDescription>
@@ -67,12 +67,17 @@ export function VerifyDialog({
         <div className="py-4">
           <p className="text-center text-lg font-mono">{phone.displayPhone}</p>
         </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+        <DialogFooter className="flex-row gap-3 sm:gap-3">
+          <Button
+            variant="outline"
+            className="flex-1 h-11"
+            onClick={() => onOpenChange(false)}
+          >
             取消
           </Button>
           <Button
             variant="destructive"
+            className="flex-1 h-11"
             onClick={handleVerify}
             disabled={loading}
           >

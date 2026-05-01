@@ -165,6 +165,7 @@ export async function formatPhone(phone: string): Promise<string> {
 
 const DEFAULT_SETTINGS: AppSettings = {
   title: "手机号核销系统",
+  enableMask: true,
 }
 
 export async function getSettings(): Promise<AppSettings> {

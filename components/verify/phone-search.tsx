@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -18,7 +19,7 @@ export function PhoneSearch() {
 
   const handleSearch = async () => {
     if (!/^\d{4}$/.test(last4)) {
-      alert("请输入4位数字")
+      toast.error("请输入4位数字")
       return
     }
 
@@ -32,11 +33,11 @@ export function PhoneSearch() {
       if (data.success) {
         setResults(data.data || [])
       } else {
-        alert(data.error || "查询失败")
+        toast.error(data.error || "查询失败")
         setResults([])
       }
     } catch {
-      alert("查询失败")
+      toast.error("查询失败")
       setResults([])
     } finally {
       setLoading(false)
@@ -57,22 +58,27 @@ export function PhoneSearch() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <Card>
-        <CardHeader>
-          <CardTitle>查询手机号</CardTitle>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base">查询手机号</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <Input
               placeholder="请输入手机号后四位"
               value={last4}
               onChange={(e) => setLast4(e.target.value)}
               maxLength={4}
-              className="text-center text-lg tracking-widest"
+              inputMode="numeric"
+              className="text-center text-lg tracking-widest h-12"
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             />
-            <Button onClick={handleSearch} disabled={loading}>
+            <Button 
+              onClick={handleSearch} 
+              disabled={loading}
+              className="h-12 px-6"
+            >
               {loading ? "查询中..." : "查询"}
             </Button>
           </div>
@@ -81,20 +87,20 @@ export function PhoneSearch() {
 
       {searched && (
         <Card>
-          <CardHeader>
-            <CardTitle>查询结果</CardTitle>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">查询结果</CardTitle>
           </CardHeader>
           <CardContent>
             {results.length === 0 ? (
-              <p className="text-muted-foreground text-center py-4">
+              <p className="text-muted-foreground text-center py-6">
                 未找到匹配的手机号
               </p>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {results.map((phone) => (
                   <div
                     key={phone.phone}
-                    className="flex items-center justify-between p-3 border rounded-lg"
+                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 border rounded-lg"
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-lg font-mono">{phone.displayPhone}</span>
@@ -105,6 +111,7 @@ export function PhoneSearch() {
                     {phone.status === "active" && (
                       <Button
                         variant="destructive"
+                        className="h-10 w-full sm:w-auto"
                         onClick={() => handleVerify(phone)}
                       >
                         核销

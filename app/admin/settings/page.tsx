@@ -6,9 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 
 export default function SettingsPage() {
   const [title, setTitle] = useState("")
+  const [enableMask, setEnableMask] = useState(true)
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
 
@@ -25,6 +27,7 @@ export default function SettingsPage() {
         const data = await response.json()
         if (data.success) {
           setTitle(data.data.title)
+          setEnableMask(data.data.enableMask ?? true)
         }
       } catch {
         toast.error("获取设置失败")
@@ -52,7 +55,7 @@ export default function SettingsPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ title }),
+        body: JSON.stringify({ title, enableMask }),
       })
 
       const data = await response.json()
@@ -91,6 +94,19 @@ export default function SettingsPage() {
               />
               <p className="text-sm text-muted-foreground">
                 此标题将显示在核销页面的标题栏和页头位置
+              </p>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="enableMask">手机号掩码</Label>
+                <Switch
+                  id="enableMask"
+                  checked={enableMask}
+                  onCheckedChange={setEnableMask}
+                />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                开启后手机号将显示为 138****5678 格式
               </p>
             </div>
             <Button onClick={handleSave} disabled={loading}>
