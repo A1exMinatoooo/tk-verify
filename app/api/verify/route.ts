@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
         phone: p.phone,
         displayPhone: await formatPhone(p.phone),
         last4: p.last4,
+        status: p.status,
         createdAt: p.createdAt,
       }))
     )

@@ -52,10 +52,10 @@ export async function addPhones(phones: string[]): Promise<{ success: number; fa
 }
 
 export async function getPhonesByLast4(last4: string): Promise<VerifyResult[]> {
-  const activePhones = await redis.smembers(KEYS.ACTIVE_PHONES)
+  const allPhones = await redis.smembers(KEYS.ALL_PHONES)
   const results: VerifyResult[] = []
 
-  for (const phone of activePhones) {
+  for (const phone of allPhones) {
     const phoneStr = String(phone)
     if (phoneStr.slice(-4) === last4) {
       const record = await redis.get<PhoneRecord>(KEYS.phone(phoneStr))
@@ -63,6 +63,7 @@ export async function getPhonesByLast4(last4: string): Promise<VerifyResult[]> {
         results.push({
           phone: record.phone,
           last4: record.last4,
+          status: record.status,
           createdAt: new Date(record.createdAt).toISOString(),
         })
       }

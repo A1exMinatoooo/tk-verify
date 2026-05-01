@@ -10,6 +10,7 @@ export interface VerifyResult {
   phone: string
   displayPhone: string
   last4: string
+  status: "active" | "verified"
   createdAt: string
 }
 

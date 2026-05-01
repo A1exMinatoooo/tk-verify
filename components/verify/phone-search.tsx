@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { VerifyDialog } from "./verify-dialog"
 import type { VerifyResult } from "@/lib/types"
 
@@ -95,13 +96,20 @@ export function PhoneSearch() {
                     key={phone.phone}
                     className="flex items-center justify-between p-3 border rounded-lg"
                   >
-                    <span className="text-lg font-mono">{phone.displayPhone}</span>
-                    <Button
-                      variant="destructive"
-                      onClick={() => handleVerify(phone)}
-                    >
-                      核销
-                    </Button>
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg font-mono">{phone.displayPhone}</span>
+                      <Badge variant={phone.status === "verified" ? "default" : "secondary"}>
+                        {phone.status === "verified" ? "已核销" : "待核销"}
+                      </Badge>
+                    </div>
+                    {phone.status === "active" && (
+                      <Button
+                        variant="destructive"
+                        onClick={() => handleVerify(phone)}
+                      >
+                        核销
+                      </Button>
+                    )}
                   </div>
                 ))}
               </div>
