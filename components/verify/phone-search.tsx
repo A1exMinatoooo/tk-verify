@@ -61,12 +61,15 @@ export function PhoneSearch() {
     <div className="space-y-4 md:space-y-6">
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-base">查询手机号</CardTitle>
+          <CardTitle className="text-base">
+            查询手机号
+            <span className="text-sm font-normal text-muted-foreground ml-2">请输入手机号后四位</span>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex gap-3">
             <Input
-              placeholder="请输入手机号后四位"
+              placeholder="后四位"
               value={last4}
               onChange={(e) => setLast4(e.target.value)}
               maxLength={4}
