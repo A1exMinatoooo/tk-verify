@@ -130,23 +130,24 @@
 }
 
 /* Custom Toast Styles */
-[data-sonner-toaster],
-ol[data-sonner-toaster] {
-  left: 50% !important;
-  right: auto !important;
-  transform: translateX(-50%) !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  inset-inline-start: 50% !important;
-  inset-inline-end: auto !important;
+[data-sonner-toaster] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  display: flex !important;
   justify-content: center !important;
+  pointer-events: none !important;
+  z-index: 999999 !important;
+  padding: 1rem !important;
+  transform: none !important;
+  margin: 0 !important;
 }
 
 @media (max-width: 640px) {
-  [data-sonner-toaster],
-  ol[data-sonner-toaster] {
-    width: auto !important;
-    max-width: calc(100vw - 2rem) !important;
+  [data-sonner-toaster] {
+    padding: 0.5rem !important;
   }
 }
 
@@ -159,6 +160,7 @@ ol[data-sonner-toaster] {
   min-width: 180px !important;
   max-width: 320px !important;
   gap: 0.75rem !important;
+  pointer-events: auto !important;
 }
 
 .cn-toast [data-icon] {
