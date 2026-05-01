@@ -135,29 +135,45 @@
   align-items: center !important;
   justify-content: center !important;
   text-align: center !important;
-  padding: 1.5rem !important;
-  min-width: 200px !important;
-  gap: 0.75rem !important;
+  padding: 1.25rem 1.5rem !important;
+  min-width: 180px !important;
+  max-width: 320px !important;
+  gap: 0.5rem !important;
 }
 
 .cn-toast [data-icon] {
   margin: 0 !important;
   order: -1 !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.cn-toast [data-icon] svg {
+  width: 2rem !important;
+  height: 2rem !important;
 }
 
 .cn-toast [data-content] {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
+  width: 100% !important;
+  overflow: hidden !important;
 }
 
 .cn-toast [data-title] {
-  font-size: 1rem !important;
+  font-size: 0.9375rem !important;
   font-weight: 600 !important;
+  line-height: 1.4 !important;
+  word-break: break-word !important;
 }
 
 .cn-toast [data-description] {
-  font-size: 0.875rem !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.4 !important;
+  word-break: break-word !important;
 }
 
 /* Toast Animation */
