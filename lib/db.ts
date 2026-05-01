@@ -52,12 +52,13 @@ export async function addPhones(phones: string[]): Promise<{ success: number; fa
 }
 
 export async function getPhonesByLast4(last4: string): Promise<VerifyResult[]> {
-  const activePhones = await redis.smembers<string[]>(KEYS.ACTIVE_PHONES)
+  const activePhones = await redis.smembers(KEYS.ACTIVE_PHONES)
   const results: VerifyResult[] = []
 
   for (const phone of activePhones) {
-    if (phone.slice(-4) === last4) {
-      const record = await redis.get<PhoneRecord>(KEYS.phone(phone))
+    const phoneStr = String(phone)
+    if (phoneStr.slice(-4) === last4) {
+      const record = await redis.get<PhoneRecord>(KEYS.phone(phoneStr))
       if (record) {
         results.push({
           phone: record.phone,
@@ -115,22 +116,23 @@ export async function deletePhone(phone: string): Promise<{ success: boolean; me
 }
 
 export async function getAllPhones(search?: string, status?: "active" | "verified"): Promise<PhoneRecord[]> {
-  let phones: string[]
+  let phones: unknown[]
 
   if (status === "active") {
-    phones = await redis.smembers<string[]>(KEYS.ACTIVE_PHONES)
+    phones = await redis.smembers(KEYS.ACTIVE_PHONES)
   } else if (status === "verified") {
-    phones = await redis.smembers<string[]>(KEYS.VERIFIED_PHONES)
+    phones = await redis.smembers(KEYS.VERIFIED_PHONES)
   } else {
-    phones = await redis.smembers<string[]>(KEYS.ALL_PHONES)
+    phones = await redis.smembers(KEYS.ALL_PHONES)
   }
 
   const records: PhoneRecord[] = []
 
   for (const phone of phones) {
-    const record = await redis.get<PhoneRecord>(KEYS.phone(phone))
+    const phoneStr = String(phone)
+    const record = await redis.get<PhoneRecord>(KEYS.phone(phoneStr))
     if (record) {
-      if (!search || phone.includes(search)) {
+      if (!search || phoneStr.includes(search)) {
         records.push(record)
       }
     }
