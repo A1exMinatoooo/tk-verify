@@ -69,7 +69,7 @@ export function PhoneSearch() {
         <CardContent>
           <div className="flex gap-3">
             <Input
-              placeholder="后四位"
+              placeholder="1234"
               value={last4}
               onChange={(e) => setLast4(e.target.value)}
               maxLength={4}
