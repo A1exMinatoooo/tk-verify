@@ -95,7 +95,7 @@ export function PhoneSearch() {
                     key={phone.phone}
                     className="flex items-center justify-between p-3 border rounded-lg"
                   >
-                    <span className="text-lg font-mono">{phone.phone}</span>
+                    <span className="text-lg font-mono">{phone.displayPhone}</span>
                     <Button
                       variant="destructive"
                       onClick={() => handleVerify(phone)}

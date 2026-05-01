@@ -36,7 +36,7 @@ export function VerifyDialog({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phone: phone.phone.replace(/\*/g, "") }),
+        body: JSON.stringify({ phone: phone.phone }),
       })
 
       const data = await response.json()
@@ -64,7 +64,7 @@ export function VerifyDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">
-          <p className="text-center text-lg font-mono">{phone.phone}</p>
+          <p className="text-center text-lg font-mono">{phone.displayPhone}</p>
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>

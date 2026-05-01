@@ -17,8 +17,10 @@ export async function GET(request: NextRequest) {
     const phones = await getPhonesByLast4(last4)
     const results: VerifyResult[] = await Promise.all(
       phones.map(async (p) => ({
-        ...p,
-        phone: await formatPhone(p.phone),
+        phone: p.phone,
+        displayPhone: await formatPhone(p.phone),
+        last4: p.last4,
+        createdAt: p.createdAt,
       }))
     )
 

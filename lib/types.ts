@@ -8,6 +8,7 @@ export interface PhoneRecord {
 
 export interface VerifyResult {
   phone: string
+  displayPhone: string
   last4: string
   createdAt: string
 }
